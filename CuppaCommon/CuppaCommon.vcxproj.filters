@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Net">
+      <UniqueIdentifier>{50e93395-95e9-4c20-bd34-e6c11cd18a11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{81dc54ad-5e79-4971-af7a-4f551ef1e480}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\System">
+      <UniqueIdentifier>{60d68b4c-4d69-49b9-b51c-bd813335fbb8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Buffer.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferObject.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="MutexQueue.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="LogSystem.h">
+      <Filter>Core\System</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="test.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="LogSystem.cpp">
+      <Filter>Core\System</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
