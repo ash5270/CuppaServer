@@ -1,11 +1,13 @@
 ﻿#include "Server.h"
 
 cuppa::net::Server::Server(int port)
-	:m_acceptor(m_asioContext, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
+	:m_acceptor(m_asioContext_One, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
 {
 	m_recvQueue = new MutexQueue <BufferObject>();
 	m_sendQueue = new MutexQueue <BufferObject>();
 	m_isUpdate = true;
+
+	client_count = 0;
 }
 
 void cuppa::net::Server::WaitForClientConnection()
@@ -20,7 +22,6 @@ void cuppa::net::Server::WaitForClientConnection()
 			{
 				printf_s("[error] accept error : %s\n", ec.message());
 			}
-
 			WaitForClientConnection();
 		});
 }
@@ -30,7 +31,11 @@ bool cuppa::net::Server::Start()
 	try
 	{
 		WaitForClientConnection();
-		m_threadContext = std::thread([this]() {m_asioContext.run(); });
+
+		m_threadContext_One = std::thread([this]() {m_asioContext_One.run(); });
+		m_threadContext_Two = std::thread([this]() {m_asioContext_Two.run(); });
+		m_threadContext_Three = std::thread([this]() {m_asioContext_Three.run(); });
+
 	}
 	catch (std::exception ex)
 	{
@@ -43,10 +48,11 @@ bool cuppa::net::Server::Start()
 
 bool cuppa::net::Server::Stop()
 {
-	m_asioContext.stop();
-	if (m_threadContext.joinable())
+	m_asioContext_One.stop();
+
+	if (m_threadContext_One.joinable())
 	{
-		m_threadContext.join();
+		m_threadContext_One.join();
 	}
 
 	printf_s("[info] Server stop\n");
@@ -75,3 +81,7 @@ void cuppa::net::Server::RecvQueuePush(BufferObject&& buffer_object)
 	m_recvQueue->PushBack(std::move(buffer_object));
 }
 
+void cuppa::net::Server::BalanceConnect()
+{
+	
+}
