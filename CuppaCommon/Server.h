@@ -4,6 +4,8 @@
 #include "Session.h"
 #include <list>
 
+#define CONTEXT_MAX_COUNT 2
+
 namespace cuppa
 {
 	namespace net
@@ -19,21 +21,22 @@ namespace cuppa
 			bool Stop();
 			void Update();
 
+			//
 			void RecvQueuePush(BufferObject&& buffer_object);
-			void BalanceConnect();
-			
+			//connect
 			virtual void OnClientConnect(boost::asio::ip::tcp::socket socket){}
-			//virtual void OnClientConnect(std::shared_ptr<Session> session){}
+			//데이터 recv 
 			virtual void OnMessage(BufferObject&& buffer){}
+			//현재 io_context를 반환함
+			boost::asio::io_context& GetNowContext();
+			//현재 io_context를 반환하고 카운트를 하나 올림
+			boost::asio::io_context& GetContextAndCounting();
+
 
 		protected:
-			boost::asio::io_context m_asioContext_One;
-			boost::asio::io_context m_asioContext_Two;
-			boost::asio::io_context m_asioContext_Three;
-
-			std::list<std::shared_ptr<Session>> m_sessionInfos_One;
-			std::list<std::shared_ptr<Session>> m_sessionInfos_Two;
-			std::list<std::shared_ptr<Session>> m_sessionInfos_Three;
+			boost::asio::io_context m_asioContexts[CONTEXT_MAX_COUNT];
+			boost::asio::io_context m_acceptContext;
+			std::list<std::shared_ptr<Session>> m_sessionInfos;
 
 		private:
 			//
@@ -42,13 +45,12 @@ namespace cuppa
 			uint32_t n_idCounter = 10000;
 			//클라이언트 접속 갯수
 			uint32_t client_count;
+			uint16_t n_context;
 			//
 			bool m_isUpdate;
-			//
-			std::thread m_threadContext_One;
-			std::thread m_threadContext_Two;
-			std::thread m_threadContext_Three;
 
+			std::thread m_threadContext[CONTEXT_MAX_COUNT];
+			std::thread m_acceptThread;
 			std::thread m_queueThread;
 
 			MutexQueue<BufferObject>* m_recvQueue;

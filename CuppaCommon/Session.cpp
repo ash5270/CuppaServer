@@ -89,6 +89,10 @@ void cuppa::net::Session::RecvDataCallBack(boost::system::error_code ec, size_t 
 
 void cuppa::net::Session::Send(Buffer&& buffer)
 {
+	m_context.post([this, buffer]()
+		{
+
+		});
 	boost::asio::post(m_context, [this, buffer]()
 		{
 			SendData(buffer);

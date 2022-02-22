@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>E:\Code\CuppaProject\x64\Debug\TestClient.exe</FullPath>
+      <FullPath>D:\Code\CuppaServer\x64\Debug\TestClient.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)CuppaCommon;E:\Code\boost_1_78_0;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)CuppaCommon\(Platform)\$(Configuration)\lib;E:\Code\boost_1_78_0\libs;$(ReferencePath);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)CuppaCommon;$(SolutionDir)../boost_1_78_0;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)CuppaCommon\(Platform)\$(Configuration)\lib;$(SolutionDir)../boost_1_78_0\libs;$(ReferencePath);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

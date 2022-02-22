@@ -78,10 +78,10 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\Code\boost_1_78_0;$(IncludePath)</IncludePath>
-    <ReferencePath>E:\Code\boost_1_78_0\libs;$(ReferencePath)</ReferencePath>
+    <IncludePath>$(SolutionDir)../boost_1_78_0;$(IncludePath)</IncludePath>
+    <ReferencePath>$(SolutionDir)../boost_1_78_0\libs;$(ReferencePath)</ReferencePath>
     <OutDir>$(Platform)\$(Configuration)\lib</OutDir>
-    <LibraryPath>E:\Code\boost_1_78_0\libs;$(ReferencePath);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)../boost_1_78_0\libs;$(ReferencePath);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

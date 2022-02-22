@@ -1,13 +1,14 @@
 ﻿#include "Server.h"
 
 cuppa::net::Server::Server(int port)
-	:m_acceptor(m_asioContext_One, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
+	:m_acceptor(m_acceptContext, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
 {
 	m_recvQueue = new MutexQueue <BufferObject>();
 	m_sendQueue = new MutexQueue <BufferObject>();
 	m_isUpdate = true;
 
 	client_count = 0;
+	n_context = 0;
 }
 
 void cuppa::net::Server::WaitForClientConnection()
@@ -31,10 +32,12 @@ bool cuppa::net::Server::Start()
 	try
 	{
 		WaitForClientConnection();
+		m_acceptThread = std::thread([this]() {m_acceptContext.run(); });
 
-		m_threadContext_One = std::thread([this]() {m_asioContext_One.run(); });
-		m_threadContext_Two = std::thread([this]() {m_asioContext_Two.run(); });
-		m_threadContext_Three = std::thread([this]() {m_asioContext_Three.run(); });
+		for(int i=0; i< CONTEXT_MAX_COUNT; i++)
+		{
+			m_threadContext[i] = std::thread([this,i]() {m_asioContexts[i].run(); });
+		}
 
 	}
 	catch (std::exception ex)
@@ -48,11 +51,23 @@ bool cuppa::net::Server::Start()
 
 bool cuppa::net::Server::Stop()
 {
-	m_asioContext_One.stop();
-
-	if (m_threadContext_One.joinable())
+	m_acceptContext.stop();
+	if(m_acceptThread.joinable())
 	{
-		m_threadContext_One.join();
+		m_acceptThread.join();
+	}
+
+	for(auto & context: m_asioContexts)
+	{
+		context.stop();
+	}
+
+	for(auto & thread : m_threadContext)
+	{
+		if(thread.joinable())
+		{
+			thread.join();
+		}
 	}
 
 	printf_s("[info] Server stop\n");
@@ -81,7 +96,21 @@ void cuppa::net::Server::RecvQueuePush(BufferObject&& buffer_object)
 	m_recvQueue->PushBack(std::move(buffer_object));
 }
 
-void cuppa::net::Server::BalanceConnect()
+boost::asio::io_context& cuppa::net::Server::GetNowContext()
 {
-	
+	return m_asioContexts[n_context];
 }
+
+boost::asio::io_context& cuppa::net::Server::GetContextAndCounting()
+{
+	uint16_t result = n_context;
+	if(n_context >= CONTEXT_MAX_COUNT - 1)
+	{
+		n_context = 0;
+	}else
+	{
+		n_context++;
+	}
+	return m_asioContexts[result];
+}
+

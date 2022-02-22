@@ -41,7 +41,7 @@ public:
 	{
 		std::shared_ptr<cuppa::net::Session>
 			new_session= std::make_shared<CuppaSession>(cuppa::net::SessionType::Server,
-														m_asioContext_One,
+														GetContextAndCounting(),
 														std::move(socket));
 
 		if(new_session)
@@ -49,7 +49,7 @@ public:
 			//new_session->m_server = this;
 			new_session->m_server = this;
 			new_session->ConnectToClient();
-			m_sessionInfos_One.push_back(std::move(new_session));
+			m_sessionInfos.push_back(std::move(new_session));
 		}
 	}
 
