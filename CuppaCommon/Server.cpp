@@ -1,7 +1,9 @@
 ﻿#include "Server.h"
 
 cuppa::net::Server::Server(int port)
-	:m_acceptor(m_acceptContext, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
+	:m_acceptThread(3)
+	,m_acceptor(m_acceptThread.GetContext(), boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
+	,m_ioThreads{ 0,1 }
 {
 	m_recvQueue = new MutexQueue <BufferObject>();
 	m_sendQueue = new MutexQueue <BufferObject>();
@@ -9,6 +11,11 @@ cuppa::net::Server::Server(int port)
 
 	client_count = 0;
 	n_context = 0;
+}
+
+cuppa::net::Server::~Server()
+{
+	cuppa::LogSystem::instance().Disable();
 }
 
 void cuppa::net::Server::WaitForClientConnection()
@@ -29,16 +36,16 @@ void cuppa::net::Server::WaitForClientConnection()
 
 bool cuppa::net::Server::Start()
 {
+	cuppa::LogSystem::instance().Start();
 	try
 	{
 		WaitForClientConnection();
-		m_acceptThread = std::thread([this]() {m_acceptContext.run(); });
-
-		for(int i=0; i< CONTEXT_MAX_COUNT; i++)
+		for (auto& thread : m_ioThreads)
 		{
-			m_threadContext[i] = std::thread([this,i]() {m_asioContexts[i].run(); });
-		}
+			thread.Start();
+		}	
 
+		m_acceptThread.Start();
 	}
 	catch (std::exception ex)
 	{
@@ -51,23 +58,11 @@ bool cuppa::net::Server::Start()
 
 bool cuppa::net::Server::Stop()
 {
-	m_acceptContext.stop();
-	if(m_acceptThread.joinable())
-	{
-		m_acceptThread.join();
-	}
+	m_acceptThread.Stop();
 
-	for(auto & context: m_asioContexts)
+	for(auto& thread : m_ioThreads)
 	{
-		context.stop();
-	}
-
-	for(auto & thread : m_threadContext)
-	{
-		if(thread.joinable())
-		{
-			thread.join();
-		}
+		thread.Stop();
 	}
 
 	printf_s("[info] Server stop\n");
@@ -98,19 +93,19 @@ void cuppa::net::Server::RecvQueuePush(BufferObject&& buffer_object)
 
 boost::asio::io_context& cuppa::net::Server::GetNowContext()
 {
-	return m_asioContexts[n_context];
+	return m_ioThreads[n_context].GetContext();
 }
 
 boost::asio::io_context& cuppa::net::Server::GetContextAndCounting()
 {
 	uint16_t result = n_context;
-	if(n_context >= CONTEXT_MAX_COUNT - 1)
+	if (n_context >= CONTEXT_MAX_COUNT - 1)
 	{
 		n_context = 0;
-	}else
+	}
+	else
 	{
 		n_context++;
 	}
-	return m_asioContexts[result];
+	return m_ioThreads[result].GetContext();
 }
-

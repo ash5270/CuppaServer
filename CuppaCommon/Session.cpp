@@ -1,6 +1,8 @@
 ﻿#include "Session.h"
-
 #include <boost/bind.hpp>
+
+#include "LogSystem.h"
+
 cuppa::net::Session::Session(SessionType type, boost::asio::io_context& context, boost::asio::ip::tcp::socket socket)
 	:m_socket(std::move(socket)), m_context(context), m_sessionType(type),m_sendBuffer(),m_recvBuffer()
 {
@@ -38,8 +40,6 @@ bool cuppa::net::Session::ConnectToServer()
 	}
 	return  false;
 }
-
-
 
 void cuppa::net::Session::Disconnect()
 {
@@ -91,10 +91,6 @@ void cuppa::net::Session::Send(Buffer&& buffer)
 {
 	m_context.post([this, buffer]()
 		{
-
-		});
-	boost::asio::post(m_context, [this, buffer]()
-		{
 			SendData(buffer);
 		});
 }
@@ -118,10 +114,10 @@ void cuppa::net::Session::SendDataCallBack(boost::system::error_code ec, size_t 
 {
 	if(!ec)
 	{
-		printf_s("[info] send data bytes : %d\n", transferred);
+		cuppa::Log::Print("send data bytes :",transferred);
 	}
 	else
 	{
-		printf_s("[error] recv function msg : %s\n", ec.message());
+		cuppa::Log::Print("recv function msg : ",ec.message());
 	}
 }

@@ -10,6 +10,9 @@
     <Filter Include="Core\System">
       <UniqueIdentifier>{60d68b4c-4d69-49b9-b51c-bd813335fbb8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Net\System">
+      <UniqueIdentifier>{f033c628-8b2e-4567-b51f-655197aa499d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buffer.h">
@@ -36,6 +39,12 @@
     <ClInclude Include="LogSystem.h">
       <Filter>Core\System</Filter>
     </ClInclude>
+    <ClInclude Include="IOThread.h">
+      <Filter>Net\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Channel.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -52,6 +61,12 @@
     </ClCompile>
     <ClCompile Include="LogSystem.cpp">
       <Filter>Core\System</Filter>
+    </ClCompile>
+    <ClCompile Include="IOThread.cpp">
+      <Filter>Net\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Channel.cpp">
+      <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -43,7 +43,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -147,7 +147,9 @@
   <ItemGroup>
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="BufferObject.h" />
+    <ClInclude Include="Channel.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="IOThread.h" />
     <ClInclude Include="LogSystem.h" />
     <ClInclude Include="MutexQueue.h" />
     <ClInclude Include="Common.h" />
@@ -155,7 +157,9 @@
     <ClInclude Include="Session.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="IOThread.cpp" />
     <ClCompile Include="LogSystem.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Session.cpp" />

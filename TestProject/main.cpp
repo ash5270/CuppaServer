@@ -8,19 +8,18 @@ public:
 	CuppaSession(cuppa::net::SessionType type, boost::asio::io_context& context, boost::asio::ip::tcp::socket socket):
 		Session(type,context,std::move(socket))
 	{
-		printf_s("[info] connect success...\n");
+		cuppa::Log::Print("connect success...");
 	}
 
 	void OnRecv(cuppa::net::Buffer buffer, size_t recvSize) override
 	{
-		printf_s("[info] data recv...\n");
+		cuppa::Log::Print("data recv...");
 		cuppa::net::Buffer send_buffer(buffer);
 
 		cuppa::net::BufferObject buffer_object(shared_from_this(), std::move(buffer));
 		m_server->RecvQueuePush(std::move(buffer_object));
-		cuppa::net::Buffer send_buffer2;
-		send_buffer2.Write("ddd", 3);
 		Send(std::move(send_buffer));
+
 	}
 
 	void OnDisconnect() override
@@ -56,8 +55,6 @@ public:
 	void OnMessage(cuppa::net::BufferObject&& buffer) override
 	{
 		printf_s("recv data\n");
-
-		
 	}
 };
 

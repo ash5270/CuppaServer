@@ -3,4 +3,4 @@
   - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
   - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
   Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
-  TestProject.vcxproj -> D:\Code\CuppaServer\x64\Debug\TestProject.exe
+  TestProject.vcxproj -> E:\Code\CuppaProject\x64\Debug\TestProject.exe
