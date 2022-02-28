@@ -153,6 +153,8 @@
     <ClInclude Include="LogSystem.h" />
     <ClInclude Include="MutexQueue.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="Packet.h" />
+    <ClInclude Include="Serializer.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Session.h" />
   </ItemGroup>
@@ -161,6 +163,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="IOThread.cpp" />
     <ClCompile Include="LogSystem.cpp" />
+    <ClCompile Include="Serializer.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="test.cpp" />

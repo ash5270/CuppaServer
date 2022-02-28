@@ -16,7 +16,7 @@ namespace cuppa
 			Info,
 			Waring,
 
-			Empty=10000,
+			Empty = 10000,
 		};
 		LogData() = default;
 
@@ -53,14 +53,14 @@ namespace cuppa
 	public:
 		static LogSystem& instance()
 		{
-			if(m_instnace == NULL)
+			if (m_instnace == NULL)
 			{
 				m_instnace = new LogSystem();
 			}
 
 			return *m_instnace;
 		}
-		
+
 		LogSystem();
 		~LogSystem();
 
@@ -97,7 +97,7 @@ namespace cuppa
 		}
 
 		template<typename T, typename ... Types>
-		static void Print(T arg,Types ... args)
+		static void Print(T arg, Types ... args)
 		{
 			MakeString(arg);
 			Print(args ...);
@@ -151,13 +151,13 @@ namespace cuppa
 			m_logData.Append(std::to_string(data));
 		}
 
-		template <typename T,std::enable_if_t<std::is_integral<T>::value,int> = 0>
+		template <typename T, std::enable_if_t<std::is_integral<T>::value, int> = 0>
 		static void MakeString(const T data)
 		{
 			m_logData.Append(std::to_string(data));
 		}
 
-		template<typename T,std::enable_if_t<std::is_floating_point<T>::value,float> = 0>
+		template<typename T, std::enable_if_t<std::is_floating_point<T>::value, float> = 0>
 		static void MakeString(const T data)
 		{
 			m_logData.Append(std::to_string(data));
@@ -168,6 +168,6 @@ namespace cuppa
 		static LogData m_logData;
 	};
 
-	
+
 }
 

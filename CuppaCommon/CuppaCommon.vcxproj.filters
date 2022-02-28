@@ -13,6 +13,9 @@
     <Filter Include="Net\System">
       <UniqueIdentifier>{f033c628-8b2e-4567-b51f-655197aa499d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Net\Packet">
+      <UniqueIdentifier>{23a5302c-d7f6-4e6b-bbdc-b99dee14b6df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buffer.h">
@@ -45,6 +48,12 @@
     <ClInclude Include="Channel.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="Packet.h">
+      <Filter>Net\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializer.h">
+      <Filter>Net\Packet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -67,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="Channel.cpp">
       <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Serializer.cpp">
+      <Filter>Net\Packet</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
