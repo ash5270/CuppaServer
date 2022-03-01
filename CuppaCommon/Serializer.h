@@ -6,6 +6,15 @@
 
 namespace cuppa
 {
+	template<typename T>
+	class Serializer
+	{
+	public:
+		virtual ~Serializer() = default;
+		virtual void serialize( T& t, cuppa::net::Buffer buffer) = 0;
+		virtual void deserialize( T& t, cuppa::net::Buffer buffer) = 0;
+	};
+
 	//
 	template <class T, class B, class Enable = void>
 	class Serializer
@@ -18,7 +27,7 @@ namespace cuppa
 
 		static void deserialize(T& t, B& buffer)
 		{
-			t.parse(buffer);
+			t.deserialize(buffer);
 		}
 	};
 
@@ -53,7 +62,8 @@ namespace cuppa
 
 		static void deserialize(T& num, B& buffer)
 		{
-		
+			char* num_ptr = reinterpret_cast<char*>(&num);
+			buffer.Read(num_ptr, sizeof(num));
 		}
 	};
 
@@ -64,18 +74,22 @@ namespace cuppa
 	public:
 		static void serialize(const T& num, B& buffer)
 		{
-			const size_t n_bits = sizeof(num) * 8;
+			/*const size_t n_bits = sizeof(num) * 8;
 			using UT = typename  std::make_unsigned<T>::type;
 			UT zigzaged_num = (num << 1) ^ (num >> (n_bits - 1));
-			Serializer<UT, B>::serialize(zigzaged_num, buffer);
+			Serializer<UT, B>::serialize(zigzaged_num, buffer);*/
+			const char* num_ptr = reinterpret_cast<const char*>(&num);
+			buffer.Write(num_ptr, sizeof(T));
 		}
 
 		static void deserialize(T& num, B& buffer)
 		{
-			using UT = typename std::make_unsigned<T>::type;
+			/*using UT = typename std::make_unsigned<T>::type;
 			UT zigzaged_num;
 			Serializer<UT, B>::deserialize(zigzaged_num, buffer);
-			num = (-(zigzaged_num & 1)) ^ (zigzaged_num >> 1);
+			num = (-(zigzaged_num & 1)) ^ (zigzaged_num >> 1);*/
+			char* num_ptr = reinterpret_cast<char*>(&num);
+			buffer.Read(num_ptr, sizeof(num));
 		}
 	};
 
@@ -94,15 +108,20 @@ namespace cuppa
 			size_t n_bytes;
 			Serializer<size_t, B>::deserialize(n_bytes, buffer);
 			str.resize(n_bytes);
+
 		}
 	};
-
-
 
 	template<class T>
 	void to_stream(const T&t ,cuppa::net::Buffer& buffer)
 	{
 		Serializer<T, cuppa::net::Buffer>::serialize(t, buffer);
+	}
+
+	template<class T>
+	void to_data(T& t, cuppa::net::Buffer&buffer)
+	{
+		Serializer<T, cuppa::net::Buffer>::deserialize(t, buffer);
 	}
 	
 }

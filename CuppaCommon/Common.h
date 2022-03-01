@@ -4,4 +4,5 @@
 #include <thread>
 #include <iostream>
 
+#define interface struct 
 

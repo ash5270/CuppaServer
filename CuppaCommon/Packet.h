@@ -1,38 +1,46 @@
 ﻿#pragma once
 #include <iostream>
 #include "Buffer.h"
+#include "Common.h"
+#include "Serializer.h"
+
 namespace cuppa::net
 {
-	struct PacketHeader
+	interface IPacketData
+	{
+		
+	};
+
+	struct PacketHeader : public  IPacketData
 	{
 		uint16_t id;
 		uint16_t size;
 	};
 
-	class Packet
-	{
-	public:
-		
-	private:
-		Buffer m_buffer;
-		PacketHeader m_header;
-	};
-
-	class PacketHeaderSerializer
+	class PacketHeaderSerializer : public Serializer<PacketHeader>
 	{
 	public:
 		PacketHeaderSerializer() = default;
 		~PacketHeaderSerializer() = default;
-	public:
-		void Serialize(const PacketHeader header, Buffer& buffer)
-		{
-			buffer.Write(&header.id,sizeof(header.id));
-			buffer.Write(&header.size,sizeof(header.size));
-		}
 
-		PacketHeader DeSerialize(const Buffer& buffer)
+		void serialize(PacketHeader& t, cuppa::net::Buffer buffer) override
 		{
-			
+			to_stream(t.id, buffer);
+			to_stream(t.size, buffer);
 		}
+		void deserialize(PacketHeader& t, cuppa::net::Buffer buffer) override
+		{
+			to_data(t.id, buffer);
+			to_data(t.size, buffer);
+		}
+	};
+
+	class Packet
+	{
+	public:
+		PacketHeaderSerializer serializer;
+	private:
+		Buffer m_buffer;
+		PacketHeader m_header;
 	};
 }
