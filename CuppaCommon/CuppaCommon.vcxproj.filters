@@ -16,6 +16,9 @@
     <Filter Include="Net\Packet">
       <UniqueIdentifier>{23a5302c-d7f6-4e6b-bbdc-b99dee14b6df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Math">
+      <UniqueIdentifier>{a9157e09-11a6-4432-8975-d8ccc99d163c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buffer.h">
@@ -54,6 +57,15 @@
     <ClInclude Include="Serializer.h">
       <Filter>Net\Packet</Filter>
     </ClInclude>
+    <ClInclude Include="MsgPacket.h">
+      <Filter>Net\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="PositionPacket.h">
+      <Filter>Net\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -78,6 +90,12 @@
       <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="Serializer.cpp">
+      <Filter>Net\Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="MsgPacket.cpp">
+      <Filter>Net\Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="PositionPacket.cpp">
       <Filter>Net\Packet</Filter>
     </ClCompile>
   </ItemGroup>

@@ -151,18 +151,23 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="IOThread.h" />
     <ClInclude Include="LogSystem.h" />
+    <ClInclude Include="MsgPacket.h" />
     <ClInclude Include="MutexQueue.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Packet.h" />
+    <ClInclude Include="PositionPacket.h" />
     <ClInclude Include="Serializer.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Session.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="IOThread.cpp" />
     <ClCompile Include="LogSystem.cpp" />
+    <ClCompile Include="MsgPacket.cpp" />
+    <ClCompile Include="PositionPacket.cpp" />
     <ClCompile Include="Serializer.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Session.cpp" />

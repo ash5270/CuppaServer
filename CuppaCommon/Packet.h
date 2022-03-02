@@ -8,11 +8,15 @@ namespace cuppa::net
 {
 	interface IPacketData
 	{
-		
+		virtual uint16_t GetSize() = 0;
 	};
 
 	struct PacketHeader : public  IPacketData
 	{
+		uint16_t GetSize() override
+		{
+			return sizeof(id) + sizeof(size);
+		}
 		uint16_t id;
 		uint16_t size;
 	};
@@ -38,9 +42,25 @@ namespace cuppa::net
 	class Packet
 	{
 	public:
-		PacketHeaderSerializer serializer;
-	private:
+		Packet() = default;
+		virtual ~Packet() = default;
+	protected:
 		Buffer m_buffer;
 		PacketHeader m_header;
+	public:
+		virtual  Buffer GetBuffer() = 0;
+
+		PacketHeader GetHeader()
+		{
+			return m_header;
+		}
+
+		void SetHeader(PacketHeader header)
+		{
+			m_header = header;
+		}
+
+	protected:
+		PacketHeaderSerializer m_headerSerializer;
 	};
 }
