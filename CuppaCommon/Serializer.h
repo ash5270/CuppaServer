@@ -6,14 +6,7 @@
 
 namespace cuppa
 {
-	template<typename T>
-	class Serializer
-	{
-	public:
-		virtual ~Serializer() = default;
-		virtual void serialize( T& t, cuppa::net::Buffer buffer) = 0;
-		virtual void deserialize( T& t, cuppa::net::Buffer buffer) = 0;
-	};
+	
 
 	//
 	template <class T, class B, class Enable = void>
@@ -30,6 +23,16 @@ namespace cuppa
 			t.deserialize(buffer);
 		}
 	};
+
+	template<typename T>
+	class PacketSerializer
+	{
+	public:
+		virtual ~PacketSerializer() = default;
+		virtual void serialize(T& t, cuppa::net::Buffer& buffer) = 0;
+		virtual void deserialize(T& t, cuppa::net::Buffer& buffer) = 0;
+	};
+
 
 	//float 
 	template<class T, class B>
@@ -105,10 +108,16 @@ namespace cuppa
 
 		static void deserialize(std::string& str, B& buffer)
 		{
-			size_t n_bytes;
-			Serializer<size_t, B>::deserialize(n_bytes, buffer);
+			uint16_t n_bytes;
+			Serializer<uint16_t, B>::deserialize(n_bytes, buffer);
+
 			str.resize(n_bytes);
 
+			char* num_ptr;
+			buffer.Read(num_ptr, n_bytes);
+			std::string msg(num_ptr);
+
+			str = msg;
 		}
 	};
 

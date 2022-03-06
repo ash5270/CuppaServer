@@ -48,6 +48,10 @@ namespace cuppa::net
 		Buffer m_recvBuffer;
 		Buffer m_sendBuffer;
 		SessionType m_sessionType;
+
+		//user info
+		uint8_t m_userId;
+		uint8_t m_channel;
 	};
 }
 

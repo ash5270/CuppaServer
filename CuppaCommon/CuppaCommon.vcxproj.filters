@@ -66,6 +66,12 @@
     <ClInclude Include="Vector3.h">
       <Filter>Core\Math</Filter>
     </ClInclude>
+    <ClInclude Include="UserInfo.h">
+      <Filter>Net\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginPacket.h">
+      <Filter>Net\Packet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -96,6 +102,12 @@
       <Filter>Net\Packet</Filter>
     </ClCompile>
     <ClCompile Include="PositionPacket.cpp">
+      <Filter>Net\Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInfo.cpp">
+      <Filter>Net\Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginPacket.cpp">
       <Filter>Net\Packet</Filter>
     </ClCompile>
   </ItemGroup>

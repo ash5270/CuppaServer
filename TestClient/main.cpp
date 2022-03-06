@@ -2,6 +2,7 @@
 #include "Buffer.h"
 #include <thread>
 #include "Serializer.h"
+#include<Vector3.h>
 
 #include <list>
 
@@ -35,39 +36,15 @@ int main()
 	//	//client.Update();
 	//}
 
-	Buffer buffer;
-	//buffer.Write('a');
-	//buffer.Write('b');
-	//buffer.Write('c');
-	//buffer.Write('d');
-
-	float float_data = 1.24f;
-
-	/*const char* float_char= reinterpret_cast<const char*>(&float_data);*/
-
-//	buffer.Write(&float_data, sizeof(float));
-
-	/*char* datas = new char[5];
-	memset(datas, 0, 5);
-	buffer.Read(datas, 4);
-
-	std::string data_string(datas);*/
+	cuppa::Vector3 vec1(1,1,1);
+	cuppa::Vector3 vec2(2,2,2);
+	vec1 += vec2;
 
 
-	unsigned int uint_data = 123;
-	cuppa::to_stream(float_data, buffer);
-//	cuppa::to_stream(float_data, buffer);
-	/*cuppa::to_stream('d', buffer);
-	cuppa::to_stream(123123, buffer);*/
-	cuppa::to_stream(uint_data, buffer);
+	//vec1 = vec2+vec1;
 	
-	float float_datas;
-	unsigned int uintdata;
-	/*buffer.Read(&float_datas, sizeof(float));
-	buffer.Read(&uintdata, sizeof(int));*/
-	cuppa::to_data(float_datas, buffer);
-	cuppa::to_data(uintdata, buffer);
 
-
+	//vec1 = vec2;
+	
 	return  0;
 }

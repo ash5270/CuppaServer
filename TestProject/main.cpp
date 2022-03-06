@@ -1,5 +1,6 @@
 #include "Server.h"
 #include"BufferObject.h"
+#include "MsgPacket.h"
 #include <memory>
 
 class CuppaSession : public cuppa::net::Session
@@ -16,9 +17,16 @@ public:
 		cuppa::Log::Print("data recv...");
 		cuppa::net::Buffer send_buffer(buffer);
 
-		cuppa::net::BufferObject buffer_object(shared_from_this(), std::move(buffer));
+
+		cuppa::net::MsgPacket msg_packet;
+		msg_packet.SetBuffer(std::move(buffer));
+
+		auto data= msg_packet.GetData();
+
+
+		/*cuppa::net::BufferObject buffer_object(shared_from_this(), std::move(buffer));
 		m_server->RecvQueuePush(std::move(buffer_object));
-		Send(std::move(send_buffer));
+		Send(std::move(send_buffer));*/
 
 	}
 

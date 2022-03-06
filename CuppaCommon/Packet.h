@@ -6,6 +6,13 @@
 
 namespace cuppa::net
 {
+	enum PacketID
+	{
+		login = 100,
+		msg=1000,
+		position=1001,
+	};
+
 	interface IPacketData
 	{
 		virtual uint16_t GetSize() = 0;
@@ -21,18 +28,18 @@ namespace cuppa::net
 		uint16_t size;
 	};
 
-	class PacketHeaderSerializer : public Serializer<PacketHeader>
+	class PacketHeaderSerializer : public PacketSerializer<PacketHeader>
 	{
 	public:
 		PacketHeaderSerializer() = default;
 		~PacketHeaderSerializer() = default;
 
-		void serialize(PacketHeader& t, cuppa::net::Buffer buffer) override
+		void serialize(PacketHeader& t, cuppa::net::Buffer& buffer) override
 		{
 			to_stream(t.id, buffer);
 			to_stream(t.size, buffer);
 		}
-		void deserialize(PacketHeader& t, cuppa::net::Buffer buffer) override
+		void deserialize(PacketHeader& t, cuppa::net::Buffer& buffer) override
 		{
 			to_data(t.id, buffer);
 			to_data(t.size, buffer);
@@ -58,6 +65,11 @@ namespace cuppa::net
 		void SetHeader(PacketHeader header)
 		{
 			m_header = header;
+		}
+
+		void SetBuffer(Buffer&& buffer)
+		{
+			m_buffer = buffer;	
 		}
 
 	protected:

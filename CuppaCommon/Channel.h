@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <thread>
 #include "MutexQueue.h"
-
+#include "Packet.h"
 namespace cuppa::net
 {
 	class Channel
@@ -11,6 +11,7 @@ namespace cuppa::net
 
 	private:
 		std::thread m_workThread;
-		MutexQueue<Buffer> m_bufferQueue;
+		MutexQueue<Packet> m_recvQueue;
+		MutexQueue<Packet> m_sendQueue;
 	};
 }

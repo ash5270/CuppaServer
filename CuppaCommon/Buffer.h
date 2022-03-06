@@ -72,6 +72,8 @@ namespace  cuppa
 				m_offset = buffer.GetSize();
 
 				COPYMEMORY(m_buffer, buffer.m_buffer, BUFFER_SIZE);
+
+				return *this;
 			}
 
 			Buffer& operator=(cuppa::net::Buffer&&buffer)
