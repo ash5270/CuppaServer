@@ -2,6 +2,7 @@
 #include <boost/asio.hpp>
 #include "Session.h"
 #include "MutexQueue.h"
+#include"BufferObject.h"
 #include <thread>
 
 using namespace boost;

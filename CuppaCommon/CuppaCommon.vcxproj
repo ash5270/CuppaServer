@@ -155,15 +155,24 @@
     <ClInclude Include="MsgPacket.h" />
     <ClInclude Include="MutexQueue.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Packet.h" />
+    <ClInclude Include="PacketSerializer.h" />
     <ClInclude Include="PositionPacket.h" />
+    <ClInclude Include="ResultPacket.h" />
     <ClInclude Include="Serializer.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Session.h" />
-    <ClInclude Include="UserInfo.h" />
+    <ClInclude Include="SessionManager.h" />
+    <ClInclude Include="Subject.h" />
+    <ClInclude Include="UserCharacter.h" />
+    <ClInclude Include="UserInfoPacket.h" />
+    <ClInclude Include="UserSubject.h" />
+    <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BufferObject.cpp" />
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="IOThread.cpp" />
@@ -171,11 +180,15 @@
     <ClCompile Include="LogSystem.cpp" />
     <ClCompile Include="MsgPacket.cpp" />
     <ClCompile Include="PositionPacket.cpp" />
+    <ClCompile Include="ResultPacket.cpp" />
     <ClCompile Include="Serializer.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Session.cpp" />
+    <ClCompile Include="SessionManager.cpp" />
     <ClCompile Include="test.cpp" />
-    <ClCompile Include="UserInfo.cpp" />
+    <ClCompile Include="UserCharacter.cpp" />
+    <ClCompile Include="UserInfoPacket.cpp" />
+    <ClCompile Include="UserSubject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

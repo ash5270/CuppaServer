@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include "BufferObject.h"
 #include <queue>
 #include <mutex>
 namespace cuppa
@@ -14,17 +13,32 @@ namespace cuppa
 		public:
 			void PushBack(const T&& data)
 			{
-				std::lock_guard<std::mutex> lock(m_mutex);
+				std::lock_guard<std::recursive_mutex > lock(m_mutex);
 				m_queue.push(std::move(data));
+			}
+
+			void PushBack(const T& data) 
+			{
+				std::lock_guard<std::recursive_mutex > lock(m_mutex);
+				m_queue.push(data);
 			}
 
 			T FrontPopData()
 			{
-				std::lock_guard<std::mutex> lock(m_mutex);
+				std::lock_guard<std::recursive_mutex > lock(m_mutex);
 				auto data = std::move(m_queue.front());
 				m_queue.pop();
 				return data;
 			}
+
+			T PopData()
+			{
+				std::lock_guard<std::recursive_mutex > lock(m_mutex);
+				auto data = std::move(m_queue.front());
+				m_queue.pop();
+				return data;
+			}
+
 
 			size_t Size()
 			{
@@ -38,7 +52,7 @@ namespace cuppa
 
 		private:
 			std::queue<T> m_queue;
-			std::mutex m_mutex;
+			std::recursive_mutex  m_mutex;
 		};
 
 	}

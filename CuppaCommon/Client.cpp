@@ -53,8 +53,8 @@ void cuppa::net::Client::Update()
 
 void cuppa::net::Client::Send(Buffer buffer)
 {
-	BufferObject buffer_object(m_session, std::move(buffer));
-	m_sendBuffers.PushBack(std::move(buffer_object));
+	//BufferObject buffer_object(m_session, std::move(buffer));
+	//m_sendBuffers.PushBack(std::move(buffer_object));
 }
 
 void cuppa::net::Client::Connect()

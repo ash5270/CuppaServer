@@ -3,7 +3,7 @@
 #include <thread>
 #include "Serializer.h"
 #include<Vector3.h>
-
+#include<string>
 #include <list>
 
 using namespace cuppa::net;
@@ -37,12 +37,18 @@ int main()
 	//}
 
 	cuppa::Vector3 vec1(1,1,1);
-	cuppa::Vector3 vec2(2,2,2);
+	cuppa::Vector3 vec2(5,4,1);
+	cuppa::Vector3 vec3;
+
 	vec1 += vec2;
+	vec3 = vec1;
 
+	vec1 = vec2+vec1;
 
-	//vec1 = vec2+vec1;
+	float result = cuppa::Vector3::Distacne(vec2, vec1);
 	
+
+
 
 	//vec1 = vec2;
 	

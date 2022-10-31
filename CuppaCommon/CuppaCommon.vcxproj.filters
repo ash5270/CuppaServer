@@ -19,15 +19,18 @@
     <Filter Include="Core\Math">
       <UniqueIdentifier>{a9157e09-11a6-4432-8975-d8ccc99d163c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Module">
+      <UniqueIdentifier>{ef6b8cf1-7b61-4352-ad70-12289352d4a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\Session">
+      <UniqueIdentifier>{a3e2fd3a-1fbe-4c09-939e-ae480e668f9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buffer.h">
       <Filter>Net</Filter>
     </ClInclude>
     <ClInclude Include="Common.h">
-      <Filter>Net</Filter>
-    </ClInclude>
-    <ClInclude Include="Session.h">
       <Filter>Net</Filter>
     </ClInclude>
     <ClInclude Include="BufferObject.h">
@@ -66,18 +69,42 @@
     <ClInclude Include="Vector3.h">
       <Filter>Core\Math</Filter>
     </ClInclude>
-    <ClInclude Include="UserInfo.h">
+    <ClInclude Include="UserInfoPacket.h">
       <Filter>Net\Packet</Filter>
     </ClInclude>
     <ClInclude Include="LoginPacket.h">
       <Filter>Net\Packet</Filter>
     </ClInclude>
+    <ClInclude Include="PacketSerializer.h">
+      <Filter>Net\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultPacket.h">
+      <Filter>Net\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="UserSubject.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>Net\Session</Filter>
+    </ClInclude>
+    <ClInclude Include="SessionManager.h">
+      <Filter>Net\Session</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="UserCharacter.h">
+      <Filter>Net\Session</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
-      <Filter>Net</Filter>
-    </ClCompile>
-    <ClCompile Include="Session.cpp">
       <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="Server.cpp">
@@ -104,11 +131,29 @@
     <ClCompile Include="PositionPacket.cpp">
       <Filter>Net\Packet</Filter>
     </ClCompile>
-    <ClCompile Include="UserInfo.cpp">
+    <ClCompile Include="UserInfoPacket.cpp">
       <Filter>Net\Packet</Filter>
     </ClCompile>
     <ClCompile Include="LoginPacket.cpp">
       <Filter>Net\Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferObject.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultPacket.cpp">
+      <Filter>Net\Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="UserSubject.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>Net\Session</Filter>
+    </ClCompile>
+    <ClCompile Include="SessionManager.cpp">
+      <Filter>Net\Session</Filter>
+    </ClCompile>
+    <ClCompile Include="UserCharacter.cpp">
+      <Filter>Net\Session</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

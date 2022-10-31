@@ -4,12 +4,7 @@
   - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
   - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
   Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
-  LoginPacket.cpp
-  MsgPacket.cpp
-E:\Code\CuppaProject\CuppaCommon\MsgPacket.h(11,1): warning C4267: 'return': 'size_t'에서 'uint16_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  PositionPacket.cpp
-E:\Code\CuppaProject\CuppaCommon\PositionPacket.h(10,1): warning C4267: 'return': 'size_t'에서 'uint16_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Serializer.cpp
-  UserInfo.cpp
-  코드를 생성하고 있습니다...
-E:\Code\CuppaProject\CuppaCommon\Serializer.h(117): error C4700: 초기화되지 않은 'num_ptr' 지역 변수를 사용했습니다.
+E:\Code\CuppaProject\CuppaCommon\PositionPacket.h(19,1): warning C4267: 'return': 'size_t'에서 'uint16_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+E:\Code\CuppaProject\CuppaCommon\LoginPacket.h(19,1): warning C4267: 'return': 'size_t'에서 'uint16_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+E:\Code\CuppaProject\CuppaCommon\UserInfoPacket.h(14,1): warning C4267: 'return': 'size_t'에서 'uint16_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  CuppaCommon.vcxproj -> E:\Code\CuppaProject\CuppaCommon\x64\Debug\lib\CuppaCommon.lib

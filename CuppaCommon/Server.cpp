@@ -3,7 +3,7 @@
 cuppa::net::Server::Server(int port)
 	:m_acceptThread(3)
 	,m_acceptor(m_acceptThread.GetContext(), boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
-	,m_ioThreads{ 0,1 }
+	,m_ioThreads{ 0,1,2,3,4 }
 {
 	m_recvQueue = new MutexQueue <BufferObject>();
 	m_sendQueue = new MutexQueue <BufferObject>();
@@ -11,6 +11,7 @@ cuppa::net::Server::Server(int port)
 
 	client_count = 0;
 	n_context = 0;
+	m_channel_count = 0;
 }
 
 cuppa::net::Server::~Server()
@@ -37,6 +38,9 @@ void cuppa::net::Server::WaitForClientConnection()
 bool cuppa::net::Server::Start()
 {
 	cuppa::LogSystem::instance().Start();
+	//std::cout << "Main Thread " << "thread id : " << std::this_thread::get_id() << std::endl;
+	AddChannel();
+
 	try
 	{
 		WaitForClientConnection();
@@ -58,6 +62,11 @@ bool cuppa::net::Server::Start()
 
 bool cuppa::net::Server::Stop()
 {
+	for(auto& channel : m_channels)
+	{
+		channel.second->Stop();
+	}
+
 	m_acceptThread.Stop();
 
 	for(auto& thread : m_ioThreads)
@@ -86,6 +95,15 @@ void cuppa::net::Server::Update()
 	}
 }
 
+void cuppa::net::Server::SendAllUSer(Buffer&& buffer)
+{
+	for (auto session : m_sessionInfos)
+	{
+		Buffer new_buffer(buffer);
+		session->Send(std::move(new_buffer));
+	}
+}
+
 void cuppa::net::Server::RecvQueuePush(BufferObject&& buffer_object)
 {
 	m_recvQueue->PushBack(std::move(buffer_object));
@@ -109,3 +127,18 @@ boost::asio::io_context& cuppa::net::Server::GetContextAndCounting()
 	}
 	return m_ioThreads[result].GetContext();
 }
+
+void cuppa::net::Server::AddChannel()
+{
+	m_channels.insert(std::pair<int, Channel*>(m_channel_count,new Channel()));
+
+	m_channels[m_channel_count]->Init(this);
+	
+}
+
+void cuppa::net::Server::ChannelAddRecvData(int channel, const BufferObject buffer)
+{
+	m_channels[channel]->PushData(buffer);
+}
+
+

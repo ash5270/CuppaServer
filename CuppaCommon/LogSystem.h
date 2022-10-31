@@ -4,7 +4,7 @@
 #include <queue>
 #include <mutex>
 #include <iostream>
-
+#include "Vector3.h"
 namespace cuppa
 {
 	struct LogData
@@ -151,6 +151,15 @@ namespace cuppa
 			m_logData.Append(std::to_string(data));
 		}
 
+		static void MakeString(Vector3 vector3)
+		{
+			m_logData.Append(std::to_string(vector3.x));
+			m_logData.Append(",");
+			m_logData.Append(std::to_string(vector3.y));
+			m_logData.Append(",");
+			m_logData.Append(std::to_string(vector3.z));
+		}
+
 		template <typename T, std::enable_if_t<std::is_integral<T>::value, int> = 0>
 		static void MakeString(const T data)
 		{
@@ -162,6 +171,8 @@ namespace cuppa
 		{
 			m_logData.Append(std::to_string(data));
 		}
+
+
 
 	private:
 		static LogSystem& m_logSystem;

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <exception>
+#include "Common.h"
 
 #define COPYMEMORY(target, original, size) memcpy_s(target,size,original,size)
 
@@ -21,6 +22,16 @@ namespace  cuppa
 				m_capacity(BUFFER_SIZE),
 				m_offset(0),
 				m_readOffset(0)
+			{
+				CLEARMEMORY(m_buffer, m_capacity);
+			}
+
+			//size 
+			Buffer(size_t size):
+			m_buffer(new uint8_t[size]),
+			m_capacity(size),
+			m_offset(0),
+			m_readOffset(0)
 			{
 				CLEARMEMORY(m_buffer, m_capacity);
 			}
@@ -47,6 +58,16 @@ namespace  cuppa
 				buffer.m_offset = 0;
 			}
 
+			Buffer(uint8_t* data, size_t size) :
+				m_buffer(new uint8_t[size]),
+				m_capacity(size),
+				m_offset(size),
+				m_readOffset(0)
+			{
+				COPYMEMORY(m_buffer, data, size);
+			}
+			
+
 			//¼Ò¸êÀÚ 
 			~Buffer()
 			{
@@ -66,7 +87,7 @@ namespace  cuppa
 			}
 
 		public:
-			Buffer& operator =(cuppa::net::Buffer& buffer)
+			Buffer& operator =(const cuppa::net::Buffer& buffer)
 			{
 				m_capacity = buffer.GetCapacity();
 				m_offset = buffer.GetSize();
@@ -82,9 +103,11 @@ namespace  cuppa
 				m_offset = buffer.GetSize();
 				m_buffer = buffer.GetBuffer();
 
-				/*buffer.m_capacity = 0;
+				buffer.m_capacity = 0;
 				buffer.m_offset = 0;
-				buffer.m_buffer = nullptr;*/
+				buffer.m_buffer = nullptr;
+
+				return *this;
 			}
 
 		public:
@@ -96,7 +119,10 @@ namespace  cuppa
 			bool Write(const void* data,size_t size)
 			{
 				if (m_offset + size >= m_capacity)
+				{
+					Log::Error("Buffer Write size overflow");
 					return  false;
+				}
 
 				COPYMEMORY(m_buffer + m_offset, data, size);
 				m_offset += size;
@@ -107,6 +133,7 @@ namespace  cuppa
 			{
 				if(m_offset + size > m_capacity)
 				{
+					Log::Error("Buffer Write size overflow");
 					return  false;
 				}
 				COPYMEMORY(m_buffer + m_offset, data, size);
@@ -119,6 +146,7 @@ namespace  cuppa
 				size_t char_size = sizeof(char);
 				if(m_offset+ char_size > m_capacity)
 				{
+					Log::Error("Buffer Write size overflow");
 					return  false;
 				}
 				COPYMEMORY(m_buffer + m_offset, &data, char_size);
@@ -126,10 +154,11 @@ namespace  cuppa
 				return  true;
 			}
 
-			bool Read(char* data,size_t size)
+			bool Read( char* data,size_t size)
 			{
 				if (size < 0 || m_readOffset>m_offset)
 				{
+					Log::Error("Buffer Read size overflow");
 					return false;
 				}
 
@@ -142,6 +171,7 @@ namespace  cuppa
 			{
 				if (size < 0 || m_readOffset>m_offset)
 				{
+					Log::Error("Buffer Read size overflow");
 					return false;
 				}
 
@@ -165,6 +195,7 @@ namespace  cuppa
 
 			size_t m_capacity;
 			size_t m_offset;
+		public:
 			size_t m_readOffset;
 		};
 	}
